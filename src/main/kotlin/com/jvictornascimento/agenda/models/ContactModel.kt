@@ -9,7 +9,7 @@ data class ContactModel(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id:Long,
-    val numberPhone:Int,
+    val numberPhone:Long,
     @ManyToOne
     val person:PersonModel
 )

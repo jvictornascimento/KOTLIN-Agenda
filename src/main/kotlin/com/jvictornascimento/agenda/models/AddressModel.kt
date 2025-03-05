@@ -9,10 +9,10 @@ data class AddressModel(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id:Long,
     val address:String,
-    val number:Int,
+    val number:Long,
     val state:String,
     val city:String,
-    val codePostal:Int,
+    val codePostal:Long,
     @ManyToOne
     val person:PersonModel
 
