@@ -1,5 +1,6 @@
 package com.jvictornascimento.agenda.models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 import kotlin.jvm.internal.Ref.LongRef
 
@@ -11,5 +12,6 @@ data class ContactModel(
     val id:Long,
     val numberPhone:Long,
     @ManyToOne
+    @JsonBackReference
     val person:PersonModel
 )

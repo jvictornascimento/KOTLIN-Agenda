@@ -1,5 +1,6 @@
 package com.jvictornascimento.agenda.models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 @Entity
@@ -14,6 +15,7 @@ data class AddressModel(
     val city:String,
     val codePostal:Long,
     @ManyToOne
+    @JsonBackReference
     val person:PersonModel
 
 )
