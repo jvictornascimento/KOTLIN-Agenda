@@ -4,7 +4,6 @@ import com.jvictornascimento.agenda.dtos.CompletePersonDTO
 import com.jvictornascimento.agenda.dtos.PersonDTO
 import com.jvictornascimento.agenda.mapper.toCompletePersonDTO
 import com.jvictornascimento.agenda.mapper.toPersonDto
-import com.jvictornascimento.agenda.models.PersonModel
 import com.jvictornascimento.agenda.repositories.PersonRepository
 import com.jvictornascimento.agenda.services.exceptions.IdNotFoundException
 import org.springframework.stereotype.Service
