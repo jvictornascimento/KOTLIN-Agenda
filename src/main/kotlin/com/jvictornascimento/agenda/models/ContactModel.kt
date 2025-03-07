@@ -9,9 +9,9 @@ import kotlin.jvm.internal.Ref.LongRef
 data class ContactModel(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id:Long,
+    val id:Long = 0,
     val numberPhone:Long,
     @ManyToOne
     @JsonBackReference
-    val person:PersonModel
+    val person:PersonModel? =null
 )

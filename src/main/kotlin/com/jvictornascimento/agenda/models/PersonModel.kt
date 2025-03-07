@@ -9,14 +9,14 @@ data class PersonModel(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
     val name:String,
-    val age: Int,
-    val email:String,
+    val age: Int? = 0,
+    val email:String? ="",
     @OneToMany(mappedBy = "person", cascade = [CascadeType.ALL],fetch = FetchType.LAZY)
     @JsonManagedReference
-    val addresses:List<AddressModel>,
+    val addresses:List<AddressModel>? = emptyList(),
     @OneToMany(mappedBy = "person", cascade = [CascadeType.ALL],fetch = FetchType.LAZY)
     @JsonManagedReference
-    val contacts:List<ContactModel>
+    val contacts:List<ContactModel>? = emptyList()
     )

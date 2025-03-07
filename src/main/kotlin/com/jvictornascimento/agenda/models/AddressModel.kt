@@ -8,14 +8,14 @@ import jakarta.persistence.*
 data class AddressModel(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id:Long,
+    val id:Long = 0,
     val address:String,
     val number:Long,
-    val state:String,
-    val city:String,
-    val codePostal:Long,
+    val state:String?,
+    val city:String?,
+    val codePostal:Long?,
     @ManyToOne
     @JsonBackReference
-    val person:PersonModel
+    val person:PersonModel? = null
 
 )
