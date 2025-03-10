@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -31,5 +32,10 @@ class PersonController(private val service: PersonService) {
     fun createPerson(@RequestBody person: CompletePersonDTO):ResponseEntity<CompletePersonDTO>{
         val data = service.savePerson(person)
         return ResponseEntity(data, HttpStatus.CREATED)
+    }
+    @PutMapping()
+    fun updatePerson( @RequestBody person: CompletePersonDTO):ResponseEntity<CompletePersonDTO>{
+        val data = service.savePerson(person)
+        return ResponseEntity(data, HttpStatus.OK)
     }
 }

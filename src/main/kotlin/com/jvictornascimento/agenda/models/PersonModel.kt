@@ -10,9 +10,9 @@ data class PersonModel(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val name:String,
+    var name:String? = "",
     val age: Int? = 0,
-    val email:String? ="",
+    var email:String? ="",
     @OneToMany(mappedBy = "person", cascade = [CascadeType.ALL],fetch = FetchType.LAZY)
     @JsonManagedReference
     val addresses:List<AddressModel>? = emptyList(),

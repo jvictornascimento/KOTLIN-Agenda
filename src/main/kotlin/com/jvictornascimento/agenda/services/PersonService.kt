@@ -23,19 +23,19 @@ class PersonService(private val repository:PersonRepository) {
             val data = repository.findById(person.id).orElseThrow {
                 IdNotFoundException(person.id)
             }
-            val updatedData = updateData(person.toPersonModel(), data)
-            return repository.save(updatedData).toCompletePersonDTO()
+
+            return repository.save(updateData(data,person.toPersonModel())).toCompletePersonDTO()
         }
        return repository.save(person.toPersonModel()).toCompletePersonDTO()
     }
+    fun updateData(data: PersonModel, person: PersonModel): PersonModel {
+        return data.copy(
+            name = if(person.name?.isNotBlank() == true) person.name else data.name,
+            age = if (person.age == 0) data.age else person.age,
+            email = if (person.email?.isNotBlank() == true) person.email else data.email,
+            addresses = if (!person.addresses.isNullOrEmpty()) person.addresses else data.addresses,
+            contacts = if (!person.contacts.isNullOrEmpty()) person.contacts else data.contacts
 
-    fun updateData(person:PersonModel,data:PersonModel):PersonModel{
-        return person.copy(
-            name = data.name.ifBlank { person.name },
-            age = data.age ?: person.age,
-            email = data.email?.ifBlank { person.email } ?: person.email,
-            addresses = if (data.addresses.isNullOrEmpty()) person.addresses else data.addresses,
-            contacts = if (data.contacts.isNullOrEmpty()) person.contacts else data.contacts
         )
     }
 
