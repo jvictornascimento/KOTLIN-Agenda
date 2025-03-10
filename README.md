@@ -297,7 +297,8 @@ Após subir os containers, acesse <http://localhost:22222/swagger-ui.html>.
 - `Kotlin 1.9`
 - `Java 17`
 - `Gradle`
-- `Spring Boot, Spring MVC, Spring Data JPA,`
+- `Spring Boot, Spring MVC, Spring Data JPA,Spring Validation`
 - `H2 Data Base`
 - `Lombok`
+- `Swagger`
 - `Intellij`

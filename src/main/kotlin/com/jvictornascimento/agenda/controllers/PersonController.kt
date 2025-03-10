@@ -1,6 +1,7 @@
 package com.jvictornascimento.agenda.controllers
 
 import com.jvictornascimento.agenda.dtos.CompletePersonDTO
+import com.jvictornascimento.agenda.dtos.PersonCreateDTO
 import com.jvictornascimento.agenda.dtos.PersonDTO
 import com.jvictornascimento.agenda.services.PersonService
 import org.springframework.http.HttpStatus
@@ -21,13 +22,13 @@ class PersonController(private val service: PersonService) {
         return ResponseEntity(service.getById(id),HttpStatus.OK)
     }
     @PostMapping
-    fun createPerson(@RequestBody person: CompletePersonDTO):ResponseEntity<CompletePersonDTO>{
-        val data = service.savePerson(person)
+    fun createPerson(@RequestBody person: PersonCreateDTO):ResponseEntity<CompletePersonDTO>{
+        val data = service.createPerson(person)
         return ResponseEntity(data, HttpStatus.CREATED)
     }
-    @PutMapping()
-    fun updatePerson( @RequestBody person: CompletePersonDTO):ResponseEntity<CompletePersonDTO>{
-        val data = service.savePerson(person)
+    @PutMapping("/{id}")
+    fun updatePerson( @PathVariable id:Long, @RequestBody person: CompletePersonDTO):ResponseEntity<CompletePersonDTO>{
+        val data = service.updatePerson(id,person)
         return ResponseEntity(data, HttpStatus.OK)
     }
     @DeleteMapping("/{id}")
