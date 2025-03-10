@@ -8,6 +8,7 @@ import com.jvictornascimento.agenda.mapper.toPersonModel
 import com.jvictornascimento.agenda.models.PersonModel
 import com.jvictornascimento.agenda.repositories.PersonRepository
 import com.jvictornascimento.agenda.services.exceptions.IdNotFoundException
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,7 +17,8 @@ class PersonService(private val repository:PersonRepository) {
         return repository.findById(id).map { it.toCompletePersonDTO() }.orElseThrow{ IdNotFoundException(id) }
         }
     fun getAll():List<PersonDTO>{
-        return repository.findAll().map { it.toPersonDto() }
+        var sort = Sort.by("name").ascending();
+        return repository.findAll(sort).map { it.toPersonDto() }
     }
     fun savePerson(person:CompletePersonDTO):CompletePersonDTO{
         if (person.id != null) {
