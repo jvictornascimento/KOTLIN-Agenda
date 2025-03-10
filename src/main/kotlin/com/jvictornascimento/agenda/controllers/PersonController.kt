@@ -7,6 +7,7 @@ import com.jvictornascimento.agenda.services.PersonService
 import jakarta.transaction.Transactional
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -37,5 +38,10 @@ class PersonController(private val service: PersonService) {
     fun updatePerson( @RequestBody person: CompletePersonDTO):ResponseEntity<CompletePersonDTO>{
         val data = service.savePerson(person)
         return ResponseEntity(data, HttpStatus.OK)
+    }
+    @DeleteMapping("/{id}")
+    fun deletePerson(@PathVariable id:Long):ResponseEntity<Void>{
+        service.deletePerson(id)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 }

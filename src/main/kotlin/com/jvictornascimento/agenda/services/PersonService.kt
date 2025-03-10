@@ -28,6 +28,12 @@ class PersonService(private val repository:PersonRepository) {
         }
        return repository.save(person.toPersonModel()).toCompletePersonDTO()
     }
+    fun deletePerson(id:Long){
+        if (!repository.existsById(id)){
+            throw IdNotFoundException(id)
+        }
+        repository.deleteById(id)
+    }
     fun updateData(data: PersonModel, person: PersonModel): PersonModel {
         return data.copy(
             name = if(person.name?.isNotBlank() == true) person.name else data.name,
