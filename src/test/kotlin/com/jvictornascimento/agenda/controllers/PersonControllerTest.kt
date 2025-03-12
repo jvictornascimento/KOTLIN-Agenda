@@ -11,6 +11,7 @@ import com.jvictornascimento.agenda.models.ContactModel
 import com.jvictornascimento.agenda.services.PersonService
 import com.jvictornascimento.agenda.services.exceptions.IdNotFoundException
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -139,9 +140,28 @@ class PersonControllerTest {
 
     @Test
     fun updatePerson() {
+
     }
 
+
     @Test
-    fun deletePerson() {
+    fun testDeletePersonSuccess() {
+        doNothing().`when`(personService).deletePerson(2L)
+
+        webTestClient
+            .delete()
+            .uri("/person/2")
+            .exchange()
+            .expectStatus().isNoContent()
+    }
+    @Test
+    fun testDeletePersonFailure() {
+        `when`(personService.deletePerson(2L)).thenThrow(IdNotFoundException(2L))
+
+        webTestClient
+            .delete()
+            .uri("/person/2")
+            .exchange()
+            .expectStatus().isNotFound
     }
 }
