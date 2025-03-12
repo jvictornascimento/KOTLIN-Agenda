@@ -9,8 +9,9 @@ import com.jvictornascimento.agenda.mapper.toPersonModel
 import com.jvictornascimento.agenda.models.PersonModel
 import com.jvictornascimento.agenda.repositories.PersonRepository
 import com.jvictornascimento.agenda.services.exceptions.IdNotFoundException
-import org.hibernate.sql.Update
-import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,9 +19,10 @@ class PersonService(private val repository:PersonRepository) {
     fun getById(id:Long): CompletePersonDTO {
         return repository.findById(id).map { it.toCompletePersonDTO() }.orElseThrow{ IdNotFoundException(id) }
         }
-    fun getAll():List<PersonDTO>{
-        var sort = Sort.by("name").ascending();
-        return repository.findAll(sort).map { it.toPersonDto() }
+   
+    fun getAll(pageable: Pageable): Page<PersonDTO> {
+        val persons = repository.findAll(pageable)
+        return persons.map { person -> person.toPersonDto() }
     }
     fun updatePerson(id: Long ,person:CompletePersonDTO):CompletePersonDTO{
         val data = repository.findById(id).orElseThrow {
