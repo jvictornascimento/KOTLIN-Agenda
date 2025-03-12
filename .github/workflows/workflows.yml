@@ -1,0 +1,44 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código-fonte
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: gradle
+
+      - name: Configurar permissões para Gradle
+        run: chmod +x gradlew
+
+      - name: Instalar dependências
+        run: ./gradlew dependencies
+
+      - name: Compilar o projeto
+        run: ./gradlew build -x test  
+
+      - name: Executar testes com cobertura
+        run: ./gradlew test jacocoTestReport
+
+      - name: Publicar cobertura de testes
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/reports/jacoco/test/jacocoTestReport.xml
