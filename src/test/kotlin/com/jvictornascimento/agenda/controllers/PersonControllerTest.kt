@@ -139,7 +139,35 @@ class PersonControllerTest {
     }
 
     @Test
-    fun updatePerson() {
+    fun testUpdatePersonSuccess() {
+        val updatePerson = CompletePersonDTO(null,"joao",25,null, listOf(address), listOf(contact))
+        `when`(personService.updatePerson(2L, updatePerson)).thenReturn(updatePerson)
+
+        webTestClient
+            .put()
+            .uri("/person/2")
+            .bodyValue(updatePerson)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CompletePersonDTO::class.java)
+            .consumeWith { response ->
+                val responseBody = response.responseBody
+                assert(responseBody!!.name == updatePerson.name)
+                assert(responseBody.age == updatePerson.age)
+
+
+            }
+    }
+    @Test
+    fun testUpdatePersonFailure() {
+        `when`(personService.updatePerson(2L,person.toPersonModel().toCompletePersonDTO())).thenThrow(IdNotFoundException(2L))
+
+        webTestClient
+            .put()
+            .uri("/person/2")
+            .bodyValue(person.toPersonModel().toCompletePersonDTO())
+            .exchange()
+            .expectStatus().isNotFound
 
     }
 
