@@ -6,6 +6,7 @@ import com.jvictornascimento.agenda.mapper.toCompletePersonDTO
 import com.jvictornascimento.agenda.mapper.toPersonModel
 import com.jvictornascimento.agenda.models.AddressModel
 import com.jvictornascimento.agenda.models.ContactModel
+import com.jvictornascimento.agenda.models.PersonModel
 import com.jvictornascimento.agenda.repositories.PersonRepository
 import com.jvictornascimento.agenda.services.exceptions.IdNotFoundException
 import org.junit.jupiter.api.Test
@@ -15,6 +16,10 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import java.util.*
 import kotlin.test.assertEquals
 
@@ -72,6 +77,19 @@ class PersonServiceTest {
 
     @Test
     fun testGetAllSuccess() {
+        val pageable: Pageable = PageRequest.of(0, 10)
+        val page: Page<PersonModel> = PageImpl(listOf(person.toPersonModel()), pageable, 1L)
+
+        `when`(repository.findAll(pageable)).thenReturn(page)
+
+        val result = service.getAll(pageable)
+
+        assertEquals(1, result.content.size)
+        assertEquals(person.id, result.content[0].id)
+        assertEquals(person.name, result.content[0].name)
+        assertEquals(person.age, result.content[0].age)
+
+
     }
 
     @Test
